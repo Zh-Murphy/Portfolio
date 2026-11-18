@@ -1,120 +1,470 @@
 ---
 import "../styles/global.css";
 import Background from "../components/Background.astro";
-import Hero from "../components/Hero.astro";
-import Skills from "../components/Skills.astro";
-import GithubStats from "../components/GithubStats.astro";
-import Projects from "../components/Projects.astro";
-import Certificates from "../components/Certificates.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
-import About from "../components/About.astro";
-import Experience from "../components/Experience.astro";
-import Services from "../components/Services.astro";
-import Gallery from "../components/Gallery.astro";
-import Testimonials from "../components/Testimonials.astro";
-import Blog from "../components/Blog.astro";
-import BigText from "../components/BigText.astro";
+
+const projects = [
+  {
+    id: "acs",
+    number: "01",
+    typeZh: "商业广告 · 导演",
+    typeEn: "Commercial · Director",
+    titleZh: "方太 ACS 辅助烹饪系统",
+    titleEn: "FOTILE ACS",
+    descZh: "以 ACS 3.0 明火自动烹饪与烹饪导航为核心，结合智能厨房场景、AI Genie 交互与产品功能展示，建立完整的智能烹饪体验。",
+    descEn: "A product film built around ACS 3.0, intelligent cooking navigation, AI Genie interaction and the full smart-kitchen experience.",
+    roleZh: "导演",
+    roleEn: "Director",
+    image: "/work/fotile-acs.jpg"
+  },
+  {
+    id: "hisense",
+    number: "02",
+    typeZh: "商业广告 · 导演",
+    typeEn: "Commercial · Director",
+    titleZh: "海信 5i 洗衣机",
+    titleEn: "Hisense 5i",
+    descZh: "围绕产品外观、控制面板、内部结构与洗涤功能展开视觉表达，通过产品特写与 CG 视觉建立技术与设计的观看体验。",
+    descEn: "A product-driven visual system combining macro product photography, interface details, internal structure and CG to communicate design and technology.",
+    roleZh: "导演",
+    roleEn: "Director",
+    image: "/work/hisense-5i.jpg"
+  },
+  {
+    id: "fotile-fridge",
+    number: "03",
+    typeZh: "Social · 导演",
+    typeEn: "Social · Director",
+    titleZh: "方太冰箱热议社媒广告",
+    titleEn: "FOTILE Refrigerator · Social",
+    descZh: "围绕方太智慧原鲜冰箱在 AWE 2026 的亮相，通过展会现场、产品视觉与社媒传播语言构建品牌影像。",
+    descEn: "A social-first brand film built from exhibition atmosphere, product imagery and a fast, editorial visual language.",
+    roleZh: "导演",
+    roleEn: "Director",
+    image: "/work/fotile-fridge.jpg"
+  },
+  {
+    id: "execution",
+    number: "04",
+    typeZh: "执行导演 · 作品",
+    typeEn: "Executive Direction",
+    titleZh: "执行导演作品",
+    titleEn: "Executive Direction",
+    descZh: "将执行导演项目作为完整创作履历的一部分呈现：现场统筹、镜头执行、后期衔接与最终交付。",
+    descEn: "Selected executive-direction work covering set execution, production coordination, camera language and post-production handoff.",
+    roleZh: "执行导演",
+    roleEn: "Executive Director",
+    image: "/work/execution.jpg"
+  },
+  {
+    id: "social",
+    number: "05",
+    typeZh: "Social · 影像创作",
+    typeEn: "Social · Visual Work",
+    titleZh: "Social 影像实验",
+    titleEn: "Social Experiments",
+    descZh: "从社交媒体语境出发的短片与视觉实验，探索情绪、节奏、视觉符号与自然传播之间的关系。",
+    descEn: "Short-form visual experiments exploring emotion, rhythm, visual language and organic social distribution.",
+    roleZh: "创作",
+    roleEn: "Creator",
+    image: "/work/social.jpg"
+  },
+  {
+    id: "ai",
+    number: "06",
+    typeZh: "AI 影像 · 研究",
+    typeEn: "AI Film · Research",
+    titleZh: "AI 影像实验室",
+    titleEn: "AI Film Lab",
+    descZh: "持续研究 AI 在导演、视觉设计、摄影、灯光、分镜与影像工作流中的实际应用，并开发可复用的导演工具与 Agent 工作流。",
+    descEn: "Ongoing research into AI for directing, visual design, cinematography, lighting, storyboarding and reusable creative-agent workflows.",
+    roleZh: "研究 / 创作",
+    roleEn: "Research / Creator",
+    image: "/work/ai-lab.jpg"
+  }
+];
+
+const projectJson = JSON.stringify(projects);
 ---
 
-<html lang="en" class="scroll-smooth">
+<html lang="zh-CN" data-lang="zh">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Arsh Pathan — Developer, Creator, and Tech Enthusiast. Explore my portfolio of projects, skills, and achievements."
-    />
-    <title>Portfolio - Arsh Pathan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#05030a" />
+    <meta name="description" content="Murphy — 导演 / AI影像创作者。" />
+    <title>Murphy — Director / AI Visual Creator</title>
   </head>
-  <body class="bg-bg-primary text-text-main antialiased">
+  <body>
     <Background />
 
-    <main>
-      <Hero />
-      <About />
-      <Experience />
-      <Services />
-      <Skills />
-      <GithubStats />
-      <Projects />
-      <Gallery />
-      <Certificates />
-      <Testimonials />
-      <Blog />
-      <Contact />
-      <BigText />
-    </main>
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-label" id="cursor-label"></div>
 
-    <Footer />
-    
-    <script>
-      import { gsap } from "gsap";
-      import { ScrollTrigger } from "gsap/ScrollTrigger";
-      
-      gsap.registerPlugin(ScrollTrigger);
+    <div class="page-shell">
+      <header class="site-nav" id="site-nav">
+        <div class="nav-inner">
+          <a class="brand" href="#home" aria-label="Murphy home">
+            <span class="brand-mark"></span>
+            <span>MURPHY.</span>
+          </a>
 
-      document.addEventListener("DOMContentLoaded", () => {
-        // Global robust text reveals for headings and paragraphs
-        const headings = document.querySelectorAll("h2");
-        headings.forEach(heading => {
-           if(heading.classList.contains('humongous-text') || heading.id === 'github-title' || heading.classList.contains('about-heading') || heading.classList.contains('skill-heading') || heading.classList.contains('service-heading') || heading.classList.contains('project-heading') || heading.classList.contains('blog-heading')) return;
-           
-           gsap.from(heading, {
-             scrollTrigger: {
-               trigger: heading,
-               start: "top 85%",
-             },
-             y: 40,
-             opacity: 0,
-             duration: 1,
-             ease: "power3.out"
-           });
+          <nav class="nav-links" aria-label="Primary navigation">
+            <a class="nav-link active" href="#home"><span data-zh>首页</span><span data-en>Home</span></a>
+            <a class="nav-link" href="#works"><span data-zh>作品</span><span data-en>Works</span></a>
+            <a class="nav-link" href="#about"><span data-zh>关于</span><span data-en>About</span></a>
+            <a class="nav-link" href="#lab"><span data-zh>创作实验室</span><span data-en>Lab</span></a>
+            <a class="nav-link" href="#contact"><span data-zh>联系</span><span data-en>Contact</span></a>
+          </nav>
+
+          <div class="nav-actions">
+            <button class="lang-switch" id="lang-switch" type="button" aria-label="Switch language">EN</button>
+            <a class="nav-contact" href="#contact"><span data-zh>项目合作</span><span data-en>Project inquiry</span><span>↗</span></a>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" id="home">
+          <div class="container hero-grid">
+            <div class="hero-copy">
+              <div class="eyebrow hero-kicker"><span data-zh>影像 · 导演 · AI</span><span data-en>FILM · DIRECTION · AI</span></div>
+
+              <h1 class="hero-title display" id="hero-title">
+                <span data-zh>Hi, I am <em class="serif">Murphy.</em><br />导演<span class="accent">.</span><br /><span class="outline">AI 影像创作者</span><br /><span class="accent">AI Visual Creator.</span></span>
+                <span data-en>Hi, I am <em class="serif">Murphy.</em><br />DIRECTOR<span class="accent">.</span><br /><span class="outline">AI FILMMAKER</span><br /><span class="accent">VISUAL CREATOR.</span></span>
+              </h1>
+
+              <p class="hero-lede">
+                <span data-zh>我用导演的方式理解影像，也用 AI 重新组织创作流程。商业广告、CG、Social，以及正在不断扩展的 AI 影像实验，都是我正在做的事。</span>
+                <span data-en>I shape images and stories through directing, visual storytelling and AI — moving between commercial film, CG, social work and new creative systems.</span>
+              </p>
+
+              <div class="hero-actions">
+                <a class="magnetic primary" data-cursor="Explore" href="#works"><span data-zh>浏览作品</span><span data-en>Explore work</span><span>↗</span></a>
+                <a class="magnetic" data-cursor="About" href="#about"><span data-zh>了解 Murphy</span><span data-en>About Murphy</span></a>
+              </div>
+
+              <div class="hero-meta">
+                <span><strong>01</strong> / <span data-zh>商业影像</span><span data-en>Commercial</span></span>
+                <span><strong>02</strong> / <span data-zh>视觉与 CG</span><span data-en>Visual / CG</span></span>
+                <span><strong>03</strong> / <span data-zh>AI 影像</span><span data-en>AI Film</span></span>
+              </div>
+            </div>
+
+            <div class="hero-visual" aria-hidden="true">
+              <div class="hero-orbit"></div>
+              <div class="hero-core"></div>
+              <div class="hero-label a">VISUAL SYSTEM / 01</div>
+              <div class="hero-label b">IMAGE · MOTION · AI</div>
+              <div class="hero-label c">A WORLD IN MOTION</div>
+            </div>
+          </div>
+          <div class="hero-scroll">SCROLL TO EXPLORE</div>
+        </section>
+
+        <section class="intro" id="about">
+          <div class="container intro-grid reveal">
+            <div>
+              <div class="eyebrow">About</div>
+              <h2 class="intro-title display">
+                <span data-zh>让影像<br /><span class="serif">自由呼吸。</span></span>
+                <span data-en>Images<br /><span class="serif">should breathe.</span></span>
+              </h2>
+            </div>
+            <div>
+              <p class="intro-copy">
+                <span data-zh>我是一名导演与 AI 影像创作者，长期工作在<strong>商业广告、产品影像、CG、Social 与 AI 创作</strong>之间。我的工作不是把需求简单拍出来，而是把模糊的想法转成清晰的视觉方向，再通过镜头、表演、灯光、后期和 AI 工具把它真正落地。</span>
+                <span data-en>I am a director and AI visual creator working across <strong>commercial film, product imagery, CG, social content and AI-native production.</strong> I turn ambiguous ideas into clear visual direction, then carry them through camera, performance, lighting, post and emerging AI tools.</span>
+              </p>
+              <div class="intro-tags">
+                <span class="tag">Director</span>
+                <span class="tag">AI Filmmaking</span>
+                <span class="tag">Visual Design</span>
+                <span class="tag">CG</span>
+                <span class="tag">Social</span>
+                <span class="tag">Creative Systems</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="work-section" id="works">
+          <div class="container">
+            <div class="section-head reveal">
+              <div>
+                <div class="eyebrow">Selected Work</div>
+                <h2 class="display"><span data-zh>作品。</span><span data-en>Work.</span></h2>
+              </div>
+              <p><span data-zh>从商业广告到 AI 影像实验。作品不是一张张图片，而是一段段观看体验。</span><span data-en>From commercial films to AI experiments. Each project is presented as a viewing experience, not a thumbnail grid.</span></p>
+            </div>
+
+            <div class="work-list">
+              {projects.map((project) => (
+                <article class="work-item reveal">
+                  <button
+                    class="work-frame"
+                    type="button"
+                    data-project={project.id}
+                    data-cursor="Open"
+                    aria-label={project.titleZh}
+                  >
+                    <div class="work-image" data-image={project.image}></div>
+                    <div class="work-number">{project.number} / 06</div>
+                    <div class="work-content">
+                      <div class="work-type"><span data-zh>{project.typeZh}</span><span data-en>{project.typeEn}</span></div>
+                      <h3 class="work-title">
+                        <span data-zh>{project.titleZh}</span>
+                        <span data-en>{project.titleEn}</span>
+                      </h3>
+                      <p class="work-desc">
+                        <span data-zh>{project.descZh}</span>
+                        <span data-en>{project.descEn}</span>
+                      </p>
+                      <div class="work-footer">
+                        <span class="work-credits"><span data-zh>{project.roleZh}</span><span data-en>{project.roleEn}</span></span>
+                        <span class="work-open"><span data-zh>进入作品</span><span data-en>Open case</span><span>→</span></span>
+                      </div>
+                    </div>
+                  </button>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section class="lab-section" id="lab">
+          <div class="container">
+            <div class="lab-card reveal">
+              <div class="lab-content">
+                <div class="eyebrow">Creative Lab</div>
+                <h2 class="display">
+                  <span data-zh>导演之外，<br /><span class="serif">继续造工具。</span></span>
+                  <span data-en>Beyond directing,<br /><span class="serif">I build tools.</span></span>
+                </h2>
+                <p>
+                  <span data-zh>这里会是一个独立的创作实验室：AI 影像插件、导演 Skill、提示词系统、浏览器工具，以及正在研究的 Agent 工作流。主站先留下入口，后续进入独立体验。</span>
+                  <span data-en>A separate creative lab for AI visual tools, directing skills, prompt systems, browser extensions and agentic workflows. The entrance is here; the full experience will live on its own page.</span>
+                </p>
+                <div class="lab-links">
+                  <a class="magnetic primary" href="#contact"><span data-zh>查看实验室</span><span data-en>Enter the lab</span><span>↗</span></a>
+                  <span class="tag"><span data-zh>即将开放</span><span data-en>Coming soon</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="contact-section" id="contact">
+          <div class="container contact-grid reveal">
+            <div>
+              <div class="eyebrow">Contact</div>
+              <h2 class="contact-title display">
+                <span data-zh>聊聊<br /><span class="serif">下一部。</span></span>
+                <span data-en>Let's talk<br /><span class="serif">about the next one.</span></span>
+              </h2>
+              <p class="contact-copy">
+                <span data-zh>如果你有品牌影像、商业广告、AI 影像或其他值得认真做的视觉项目，可以直接联系我。</span>
+                <span data-en>For commercial films, AI-native visual projects, or anything worth making with care, send me a note.</span>
+              </p>
+              <a class="email-link" href="mailto:zh.murphy@foxmail.com">zh.murphy@foxmail.com</a>
+            </div>
+
+            <form class="contact-form" id="contact-form">
+              <div class="field">
+                <label for="name"><span data-zh>姓名</span><span data-en>Name</span></label>
+                <input id="name" name="name" required autocomplete="name" />
+              </div>
+              <div class="field">
+                <label for="email"><span data-zh>邮箱</span><span data-en>Email</span></label>
+                <input id="email" name="email" type="email" required autocomplete="email" />
+              </div>
+              <div class="field">
+                <label for="message"><span data-zh>留言</span><span data-en>Message</span></label>
+                <textarea id="message" name="message" required></textarea>
+              </div>
+              <button class="magnetic primary" type="submit"><span data-zh>发送邮件</span><span data-en>Send message</span><span>↗</span></button>
+              <div class="form-status" id="form-status"></div>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <span>© 2026 MURPHY.</span>
+          <span><span data-zh>导演 · AI 影像 · 创作系统</span><span data-en>Director · AI Visuals · Creative Systems</span></span>
+        </div>
+      </footer>
+    </div>
+
+    <div class="project-modal" id="project-modal" aria-hidden="true">
+      <div class="modal-inner">
+        <div class="modal-top">
+          <div class="eyebrow">Project Preview</div>
+          <button class="modal-close" id="modal-close" type="button" aria-label="Close">×</button>
+        </div>
+        <div class="modal-media">
+          <div class="modal-art" id="modal-art"></div>
+        </div>
+        <div class="modal-meta">
+          <div>
+            <div class="eyebrow" id="modal-type"></div>
+            <h2 class="modal-title display" id="modal-title"></h2>
+            <div class="modal-data">
+              <div><span>Role</span><strong id="modal-role"></strong></div>
+              <div><span>Format</span><strong id="modal-format">Film / Visual</strong></div>
+              <div><span>Status</span><strong>Selected Work</strong></div>
+            </div>
+          </div>
+          <div>
+            <p class="modal-description" id="modal-description"></p>
+            <div class="modal-links">
+              <span class="tag"><span data-zh>原片链接在项目资料接入后显示</span><span data-en>Original-film link will appear once the project archive is connected.</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script define:vars={{ projectJson }}>
+      const projects = JSON.parse(projectJson);
+      const body = document.body;
+      const root = document.documentElement;
+      const langSwitch = document.getElementById("lang-switch");
+      const nav = document.getElementById("site-nav");
+      const cursor = document.getElementById("cursor");
+      const cursorLabel = document.getElementById("cursor-label");
+      const modal = document.getElementById("project-modal");
+      const modalClose = document.getElementById("modal-close");
+      const modalTitle = document.getElementById("modal-title");
+      const modalType = document.getElementById("modal-type");
+      const modalRole = document.getElementById("modal-role");
+      const modalDescription = document.getElementById("modal-description");
+      const modalArt = document.getElementById("modal-art");
+
+      document.querySelectorAll(".work-image").forEach((el) => {
+        const image = el.dataset.image;
+        el.style.backgroundImage = "linear-gradient(120deg, rgba(5,3,10,.12), rgba(5,3,10,.02)), url('" + image + "')";
+      });
+
+      const setLanguage = (lang) => {
+        root.dataset.lang = lang;
+        root.lang = lang === "zh" ? "zh-CN" : "en";
+        document.querySelectorAll("[data-zh]").forEach((el) => el.style.display = lang === "zh" ? "" : "none");
+        document.querySelectorAll("[data-en]").forEach((el) => el.style.display = lang === "en" ? "" : "none");
+        langSwitch.textContent = lang === "zh" ? "EN" : "中";
+      };
+
+      setLanguage("zh");
+      langSwitch.addEventListener("click", () => setLanguage(root.dataset.lang === "zh" ? "en" : "zh"));
+
+      window.addEventListener("scroll", () => {
+        nav.classList.toggle("scrolled", window.scrollY > 30);
+      }, {passive:true});
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("is-visible");
         });
+      }, {threshold:.12, rootMargin:"0px 0px -6% 0px"});
+      document.querySelectorAll(".reveal").forEach((el) => revealObserver.observe(el));
 
-        // Motion Blur on Scroll
-        const mainContent = document.querySelector('main');
-        const footerContent = document.querySelector('footer');
-        
-        // Select all direct children of main except the math section
-        // because CSS filters break position: fixed which GSAP pinning relies on.
-        const blurTargets = [];
-        if (mainContent) {
-            Array.from(mainContent.children).forEach(child => {
-                if (child.id !== 'math-journey' && child.tagName !== 'SCRIPT') {
-                    child.style.willChange = 'filter';
-                    blurTargets.push(child);
-                }
-            });
+      let cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+      let tx = cx, ty = cy;
+      window.addEventListener("pointermove", (e) => {
+        tx = e.clientX;
+        ty = e.clientY;
+        const px = (e.clientX / window.innerWidth - .5) * 22;
+        const py = (e.clientY / window.innerHeight - .5) * 18;
+        document.documentElement.style.setProperty("--mx", px + "px");
+        document.documentElement.style.setProperty("--my", py + "px");
+
+        document.querySelectorAll(".magnetic").forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.width && rect.height && e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            const dx = (e.clientX - (rect.left + rect.width/2)) * .12;
+            const dy = (e.clientY - (rect.top + rect.height/2)) * .12;
+            el.style.transform = "translate(" + dx + "px," + dy + "px)";
+          } else {
+            el.style.transform = "";
+          }
+        });
+      }, {passive:true});
+
+      function cursorFrame() {
+        cx += (tx-cx)*.18;
+        cy += (ty-cy)*.18;
+        cursor.style.transform = "translate3d(" + cx + "px," + cy + "px,0)";
+        cursorLabel.style.transform = "translate3d(" + (cx+18) + "px," + (cy+18) + "px,0)";
+        requestAnimationFrame(cursorFrame);
+      }
+      if (window.matchMedia("(pointer:fine)").matches) cursorFrame();
+
+      document.addEventListener("pointerover", (e) => {
+        const target = e.target.closest("[data-cursor]");
+        if (!target || !window.matchMedia("(pointer:fine)").matches) return;
+        cursor.classList.add("active");
+        cursorLabel.textContent = target.dataset.cursor || "";
+        cursorLabel.classList.add("show");
+      });
+      document.addEventListener("pointerout", (e) => {
+        if (e.target.closest("[data-cursor]")) {
+          cursor.classList.remove("active");
+          cursorLabel.classList.remove("show");
         }
-        if (footerContent) {
-            footerContent.style.willChange = 'filter';
-            blurTargets.push(footerContent);
-        }
+      });
 
-        let scrollTimeout;
-        let lastScroll = window.scrollY;
+      const openProject = (id) => {
+        const project = projects.find((item) => item.id === id);
+        if (!project) return;
+        const lang = root.dataset.lang || "zh";
+        modalTitle.textContent = lang === "zh" ? project.titleZh : project.titleEn;
+        modalType.textContent = lang === "zh" ? project.typeZh : project.typeEn;
+        modalRole.textContent = lang === "zh" ? project.roleZh : project.roleEn;
+        modalDescription.textContent = lang === "zh" ? project.descZh : project.descEn;
+        modalArt.style.backgroundImage = "linear-gradient(180deg, rgba(4,2,8,.08), rgba(4,2,8,.52)), url('" + project.image + "')";
+        modal.classList.add("open");
+        modal.setAttribute("aria-hidden", "false");
+        body.classList.add("is-locked");
+      };
 
-        window.addEventListener("scroll", () => {
-            const currentScroll = window.scrollY;
-            const velocity = Math.abs(currentScroll - lastScroll);
-            lastScroll = currentScroll;
-            
-            // Map velocity to blur amount (light intensity)
-            const blurValue = Math.min(velocity * 0.03, 5);
-            
-            blurTargets.forEach(target => {
-                target.style.filter = `blur(${blurValue}px)`;
-            });
-            
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                blurTargets.forEach(target => {
-                    target.style.filter = "blur(0px)";
-                });
-            }, 60);
-        }, { passive: true });
+      document.querySelectorAll("[data-project]").forEach((el) => {
+        el.addEventListener("click", () => openProject(el.dataset.project));
+      });
+
+      const closeProject = () => {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+        body.classList.remove("is-locked");
+      };
+      modalClose.addEventListener("click", closeProject);
+      modal.addEventListener("click", (e) => { if (e.target === modal) closeProject(); });
+      window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeProject(); });
+
+      const form = document.getElementById("contact-form");
+      const status = document.getElementById("form-status");
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const name = String(data.get("name") || "").trim();
+        const email = String(data.get("email") || "").trim();
+        const message = String(data.get("message") || "").trim();
+        if (!name || !email || !message) return;
+        const subject = encodeURIComponent("Portfolio project inquiry — " + name);
+        const bodyText = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\n" + message);
+        window.location.href = "mailto:zh.murphy@foxmail.com?subject=" + subject + "&body=" + bodyText;
+        status.textContent = root.dataset.lang === "zh" ? "正在打开你的默认邮件客户端…" : "Opening your default mail client…";
+      });
+
+      document.querySelectorAll("a[href^='#']").forEach((a) => {
+        a.addEventListener("click", (e) => {
+          const href = a.getAttribute("href");
+          if (!href || href === "#") return;
+          const target = document.querySelector(href);
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({behavior:"smooth", block:"start"});
+        });
       });
     </script>
   </body>
